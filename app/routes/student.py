@@ -6,7 +6,7 @@ import random
 from app.config.auth import verify_jwt
 from app.utils.response import CustomResponse
 from app.repos.student import *
-# from app.utils.rfid import write_to_rfid
+from app.utils.rfid import write_to_rfid
 from open_cv.training import train
 
 router = APIRouter()
@@ -44,12 +44,12 @@ class SaveRFIDRequest(BaseModel):
 
 @router.post('/rfid/save')
 async def save_to_rfid(request: SaveRFIDRequest, auth=Depends(verify_jwt)) -> CustomResponse:
-    # response = await write_to_rfid(request.std_id)
-    # if response:
-    #     return CustomResponse(detail='RFID written')
-    # else:
-    #     raise HTTPException(status_code=400, detail='Failed to write to RFID')
-    print(request.std_id)
+    response = await write_to_rfid(request.std_id)
+    if response:
+        return CustomResponse(detail='RFID written')
+    else:
+        raise HTTPException(status_code=400, detail='Failed to write to RFID')
+    # print(request.std_id)
 
 
 @router.post('/train')

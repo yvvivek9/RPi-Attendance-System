@@ -1,6 +1,8 @@
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 import base64
+import asyncio
+import time
 
 rfid = SimpleMFRC522()
 
@@ -25,3 +27,12 @@ async def read_from_rfid() -> str:
             decoded_bytes = base64.b64decode(encoded_bytes)
             decoded_str = decoded_bytes.decode()
             return decoded_str
+        
+
+if __name__ == '__main__':
+    # write = asyncio.run(write_to_rfid('Get out'))
+    # time.sleep(2)
+    reply = asyncio.run(read_from_rfid())
+    print(reply)
+
+
