@@ -26,6 +26,12 @@ def load_faces():
     return np.array(face_ids), images
 
 
+def delete_images():
+    image_paths = [os.path.join(photos_path, f) for f in os.listdir(photos_path)]
+    for image in image_paths:
+        os.remove(image)
+
+
 def train():
     face_ids, images = load_faces()
     yml_path = os.path.join('open_cv', 'trainingData.yml')
@@ -35,6 +41,7 @@ def train():
     else:
         recognizer.train(images, face_ids)
     recognizer.write(yml_path)
+    delete_images()
 
 
 # if __name__ == "__main__":
