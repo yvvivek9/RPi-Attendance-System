@@ -141,8 +141,21 @@ class _UpdateRFIDPopupState extends State<UpdateRFIDPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      title: Text('Place RFID card on the reader'),
+    return Center(
+      child: Container(
+        height: 200,
+        width: 500,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: context.theme.colorScheme.surface,
+        ),
+        child: Center(
+          child: Text(
+            'Place RFID card on the reader',
+            style: context.textTheme.titleLarge,
+          ),
+        ),
+      ),
     );
   }
 }
