@@ -66,10 +66,11 @@ def update_attendance():
                 "period": period
             })
             if not exist:
+                present = load_present()
                 clc.insert_one({
                     "date": date,
                     "period": period,
-                    "present": load_present()
+                    "present": present if present != [''] else []
                 })
                 print("Attendance updated")
 
