@@ -13,6 +13,7 @@ picam2 = Picamera2()
 camera_config = picam2.create_preview_configuration(main={"format": "RGB888", "size": (640, 480)})
 picam2.configure(camera_config)
 
+
 def check_face_id(target_face_id: str, timeout: int = 10) -> bool:
     picam2.start()
     start_time = time.time()

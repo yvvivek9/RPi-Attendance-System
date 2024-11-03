@@ -12,18 +12,26 @@ FILE_PATH = os.path.join("rpi", "present.txt")
 
 
 def load_present() -> List[str]:
-    with open(FILE_PATH, 'r') as file:
-        content = file.read()
-        return content.split(',')
+    try:
+        with open(FILE_PATH, 'r') as file:
+            content = file.read()
+            return content.split(',')
+    except:
+        time.sleep(1)
+        return load_present()
     
 
 def save_present(present: List[str]):
-    with open(FILE_PATH, 'w') as file:
-        file.write(','.join(present))
+    try:
+        with open(FILE_PATH, 'w') as file:
+            file.write(','.join(present))
+    except:
+        time.sleep(1)
+        save_present(present)
 
 
 def take_attendance():
-    while True:
+    while True:       
         time.sleep(2)
         write_text("Place card", "on the reader")
         student_id = asyncio.run(read_from_rfid()) # Holds for 1 sec

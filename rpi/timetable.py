@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import json
 import os
+import time
 
 from app.config.database import get_database
 
@@ -31,8 +32,13 @@ def get_todays_day():
     
 
 def store_timetable(tt: dict):
-    with open(FILE_PATH, "w") as outfile: 
-        json.dump(tt, outfile)
+    try:
+        with open(FILE_PATH, "w") as outfile: 
+            json.dump(tt, outfile)
+    except:
+        time.sleep(1)
+        store_timetable(tt)
+    
     
 
 def get_timetable():
