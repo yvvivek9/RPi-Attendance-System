@@ -20,6 +20,7 @@ def check_face_id(target_face_id: str, timeout: int = 10) -> bool:
 
     while time.time() - start_time < timeout:
         img = picam2.capture_array()
+        img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = faceDetect.detectMultiScale(gray, 1.3, 5)
         

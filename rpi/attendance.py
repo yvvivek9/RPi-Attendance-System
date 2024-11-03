@@ -15,7 +15,8 @@ def load_present() -> List[str]:
     try:
         with open(FILE_PATH, 'r') as file:
             content = file.read()
-            return content.split(',')
+            ct_list = content.split(',')
+            return ct_list if ct_list != [''] else []
     except:
         time.sleep(1)
         return load_present()
