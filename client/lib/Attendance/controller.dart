@@ -3,8 +3,9 @@ import 'package:loader_overlay/loader_overlay.dart';
 
 import 'package:client/Common/common.dart';
 
-class DashboardController extends GetxController {
-  final attendance = Rx<List<AttendanceStats>>([]);
+class AttendanceController extends GetxController {
+  final attendance = Rx<List<AttendanceModel>>([]);
+  List<Map> students = [];
 
   @override
   void onInit() {
@@ -17,11 +18,12 @@ class DashboardController extends GetxController {
       await Future.delayed(Duration(seconds: 1), () {});
       Get.context!.loaderOverlay.show();
       final response = await httpPostRequest(route: '/api/attendance/list', body: {});
-      final resList = List<Map>.from(response);
-      final List<AttendanceStats> temp = [];
-      for (final i in resList) {
-        temp.add(AttendanceStats("${i['date']}, ${i['period']}", List.from(i['present']).length));
+      final List<AttendanceModel> temp = [];
+      for (final i in List<Map>.from(response)) {
+        temp.add(AttendanceModel(i["date"], i["period"], List<String>.from(i["present"])));
       }
+      final std = await httpPostRequest(route: '/api/student/list', body: {});
+      students = List<Map>.from(std);
       attendance.value = temp;
     } catch (e) {
       showErrorSnackBar(content: e.toString());
@@ -31,13 +33,10 @@ class DashboardController extends GetxController {
   }
 }
 
-class AttendanceStats {
-  const AttendanceStats(this.detail, this.count);
-  final String detail;
-  final int count;
-
-  @override
-  String toString() {
-    return 'AttendanceStats{detail: $detail, count: $count}';
-  }
+class AttendanceModel {
+  AttendanceModel(this.date, this.period, this.present);
+  final String date;
+  final String period;
+  final List<String> present;
+  bool expanded = false;
 }

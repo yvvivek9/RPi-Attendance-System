@@ -28,6 +28,8 @@ class ListStudentsController extends GetxController {
     try {
       Get.context!.loaderOverlay.show();
       final response = await httpPostRequest(route: '/api/student/train', body: {});
+      await httpPostRequest(route: '/system/stop', body: {});
+      await httpPostRequest(route: '/system/start', body: {});
       showSuccessSnackBar(content: 'Training completed');
     } catch (e) {
       showErrorSnackBar(content: 'Training failed');

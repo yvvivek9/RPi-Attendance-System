@@ -125,12 +125,14 @@ class _UpdateRFIDPopupState extends State<UpdateRFIDPopup> {
 
   Future<void> sendRequest() async {
     try {
+      await httpPostRequest(route: '/system/stop', body: {});
       final response = await httpPostRequest(
         route: '/api/student/rfid/save',
         body: {
           "std_id": widget.stdID,
         },
       );
+      await httpPostRequest(route: '/system/start', body: {});
       showSuccessSnackBar(content: 'RFID Updated');
     } catch (e) {
       showErrorSnackBar(content: e.toString());
