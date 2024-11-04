@@ -6,6 +6,7 @@ import time
 from dotenv import load_dotenv
 
 from app.config.database import check_database
+from rpi.lcd_display import write_text
 
 
 while True:  # Check for internet
@@ -25,5 +26,6 @@ port = os.getenv('PORT')
 asyncio.run(check_database())
 # uvicorn.run("server:fastAPI", host="0.0.0.0", port=5000)
 uvicorn.run("server:fastAPI", host="0.0.0.0", port=443, ssl_certfile=os.path.join('certificates', 'cert.pem'), ssl_keyfile=os.path.join('certificates', 'key.pem'))
+write_text('Server started')
 
 # sudo /home/pi4/Desktop/RPi-Attendance-System/.venv/bin/python /home/pi4/Desktop/RPi-Attendance-System/run.py
