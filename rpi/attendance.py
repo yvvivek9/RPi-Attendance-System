@@ -18,6 +18,7 @@ def load_present() -> List[str]:
             ct_list = content.split(',')
             return ct_list if ct_list != [''] else []
     except:
+        print("failed to load present")
         time.sleep(1)
         return load_present()
     
@@ -27,6 +28,7 @@ def save_present(present: List[str]):
         with open(FILE_PATH, 'w') as file:
             file.write(','.join(present))
     except:
+        print("failed to write present")
         time.sleep(1)
         save_present(present)
 

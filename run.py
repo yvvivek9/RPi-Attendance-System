@@ -25,3 +25,5 @@ port = os.getenv('PORT')
 asyncio.run(check_database())
 # uvicorn.run("server:fastAPI", host="0.0.0.0", port=5000)
 uvicorn.run("server:fastAPI", host="0.0.0.0", port=443, ssl_certfile=os.path.join('certificates', 'cert.pem'), ssl_keyfile=os.path.join('certificates', 'key.pem'))
+
+# sudo /home/pi4/Desktop/RPi-Attendance-System/.venv/bin/python /home/pi4/Desktop/RPi-Attendance-System/run.py

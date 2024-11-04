@@ -26,10 +26,10 @@ def time_lesser_than_now(time: str) -> bool:
     now = datetime.now()
     now_str = datetime.strftime(now, '%H:%M')
     now_hour, now_minute = str.split(now_str, ':')
-    if now_hour > hour and now_minute > minute:
-        return True
-    else:
-        return False
+    if now_hour >= hour:
+        if now_minute >= minute:
+            return True
+    return False
     
 
 def get_period() -> str:

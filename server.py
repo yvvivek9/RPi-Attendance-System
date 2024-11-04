@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -8,10 +8,7 @@ from app.routes import auth, student, timetable, attendance
 
 
 fastAPI = FastAPI()
-fastAPI.server_process = subprocess.Popen([
-        "/home/pi4/Desktop/RPi-Attendance-System/.venv/bin/python",
-        "/home/pi4/Desktop/RPi-Attendance-System/system.py"
-    ])
+fastAPI.server_process = None
 fastAPI.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -27,15 +24,27 @@ async def index_route():
 
 @fastAPI.post("/system/stop")
 async def stop_system_route():
-    fastAPI.server_process.terminate()
+    if fastAPI.server_process:
+        fastAPI.server_process.terminate()
+        fastAPI.server_process = None
+    else:
+        raise HTTPException(detail="Server is not running")
 
 
 @fastAPI.post("/system/start")
 async def start_system_route():
-    fastAPI.server_process = subprocess.Popen([
-        "/home/pi4/Desktop/RPi-Attendance-System/.venv/bin/python",
-        "/home/pi4/Desktop/RPi-Attendance-System/system.py"
-    ])
+    if not fastAPI.server_process:
+        fastAPI.server_process = subprocess.Popen([
+            "/home/pi4/Desktop/RPi-Attendance-System/.venv/bin/python",
+            "/home/pi4/Desktop/RPi-Attendance-System/system.py"
+        ])
+    else:
+        raise HTTPException(detail="Server is already running")
+    
+
+@fastAPI.post("/system/status")
+async def system_status_route() -> bool:
+    return True if fastAPI.server_process else False
 
 
 fastAPI.include_router(auth.router, prefix="/api/auth", tags=["auth"])
