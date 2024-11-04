@@ -6,8 +6,8 @@ import 'dart:developer' as developer;
 
 import 'package:client/Login/page.dart';
 
-const String domain = "http://192.168.1.21:5000";
-// const String domain = "";
+// const String domain = "http://192.168.1.21:5000";
+const String domain = "";
 
 Future<dynamic> httpPostRequest({
   required String route,
