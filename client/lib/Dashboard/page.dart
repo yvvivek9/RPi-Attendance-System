@@ -22,12 +22,7 @@ class DashboardScreen extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: context.theme.colorScheme.tertiary,
-              ),
-              child: Container(),
-            ),
+            CustomDrawerHeader(),
             ListTile(
               textColor: context.theme.colorScheme.tertiary,
               titleTextStyle: context.textTheme.titleMedium,

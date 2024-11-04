@@ -56,8 +56,6 @@ class TimetableController extends GetxController {
             'end': '${newEndTime.hour}:${newEndTime.minute}',
           },
         );
-        await httpPostRequest(route: '/system/stop', body: {});
-        await httpPostRequest(route: '/system/start', body: {});
         showSuccessSnackBar(content: 'Time update successful');
       }
     } catch (e) {
