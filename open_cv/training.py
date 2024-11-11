@@ -20,8 +20,8 @@ def load_faces():
         for (x, y, w, h) in faces:  # Crop and append the face region
             face = img_np[y:y+h, x:x+w]
             images.append(face)
-        face_id = os.path.split(path)[-1].split('.')[0]
-        face_ids.append(int(face_id))
+            face_id = os.path.split(path)[-1].split('.')[0]
+            face_ids.append(int(face_id))
 
     return np.array(face_ids), images
 
@@ -34,6 +34,8 @@ def delete_images():
 
 def train():
     face_ids, images = load_faces()
+    print(len(face_ids))
+    print(len(images))
     yml_path = os.path.join('open_cv', 'trainingData.yml')
     if os.path.exists(yml_path):
         recognizer.read(yml_path)
@@ -41,9 +43,9 @@ def train():
     else:
         recognizer.train(images, face_ids)
     recognizer.write(yml_path)
+    print("Training complete, now deleting")
     delete_images()
 
 
-# if __name__ == "__main__":
-#     train()
-#     cv2.destroyAllWindows()
+if __name__ == "__main__":
+    train()

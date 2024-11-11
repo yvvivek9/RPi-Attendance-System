@@ -28,7 +28,7 @@ async def stop_system_route():
         fastAPI.server_process.terminate()
         fastAPI.server_process = None
     else:
-        raise HTTPException(detail="Server is not running")
+        raise HTTPException(status_code=400, detail="Server is not running")
 
 
 @fastAPI.post("/system/start")
@@ -39,7 +39,7 @@ async def start_system_route():
             "/home/pi4/Desktop/RPi-Attendance-System/system.py"
         ])
     else:
-        raise HTTPException(detail="Server is already running")
+        raise HTTPException(status_code=400, detail="Server is already running")
     
 
 @fastAPI.post("/system/status")
